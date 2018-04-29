@@ -10,8 +10,6 @@ import com.ubs.opsit.interviews.util.BerlinClockConstants;
  */
 public class BerlinClockTimeConverter implements TimeConverter {
 
-    BerlinClockUtil berlinClockUtil = new BerlinClockUtil();
-    
     @Override
     public String convertTime(String aTime) {
         if(aTime == null || aTime.split(BerlinClockConstants.COLON).length != BerlinClockConstants.THREE){
@@ -22,17 +20,15 @@ public class BerlinClockTimeConverter implements TimeConverter {
         String[] timeParts = aTime.split(BerlinClockConstants.COLON);
         
         // Get seconds
-        String convertedSeconds = berlinClockUtil.convertSeconds(timeParts[2]);
+        String convertedSeconds = BerlinClockUtil.convertSeconds(timeParts[2]);
         berlinClockTime.append(convertedSeconds);
         
         // Get hours
-        String convertedHours = berlinClockUtil.convertHours(timeParts[0]);
+        String convertedHours = BerlinClockUtil.convertHours(timeParts[0]);
         berlinClockTime.append(convertedHours);
         
-        
-        
         // Get minutes
-        String convertedMinutes = berlinClockUtil.convertMinutes(timeParts[1]);
+        String convertedMinutes = BerlinClockUtil.convertMinutes(timeParts[1]);
         berlinClockTime.append(convertedMinutes);
         
         return berlinClockTime.toString();

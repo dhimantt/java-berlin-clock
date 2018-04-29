@@ -44,14 +44,12 @@ public class BerlinClockUtilTest {
     private static final String OOOOOOOOOOO = "OOOOOOOOOOO";
     private static final String YYRYYRYYRYY = "YYRYYRYYRYY";
 
-    BerlinClockUtil berlinClockUtil = new BerlinClockUtil();
-    
     @Rule
     public ExpectedException thrownException = ExpectedException.none();
     
     @Test
     public void testConvertStringToNumber() {
-        int number = berlinClockUtil.convertStringToNumber(TEN, BerlinClockConstants.SECOND);
+        int number = BerlinClockUtil.convertStringToNumber(TEN, BerlinClockConstants.SECOND);
         assertThat(number, is(NUMBER_TEN));
     }
     
@@ -59,47 +57,47 @@ public class BerlinClockUtilTest {
     public void testConvertStringToNumberWithInvalidInput() {
         thrownException.expect(IllegalArgumentException.class);
         thrownException.expectMessage(String.format(BerlinClockConstants.PLEASE_ENTER_NUMERIC_VALUES, BerlinClockConstants.SECOND));
-        berlinClockUtil.convertStringToNumber(HELLO, BerlinClockConstants.SECOND);
+        BerlinClockUtil.convertStringToNumber(HELLO, BerlinClockConstants.SECOND);
     }
     
     @Test
     public void testConvertStringToNumberWithNullInput() {
         thrownException.expect(IllegalArgumentException.class);
         thrownException.expectMessage(String.format(BerlinClockConstants.PLEASE_ENTER_NUMERIC_VALUES, BerlinClockConstants.SECOND));
-        berlinClockUtil.convertStringToNumber(null, BerlinClockConstants.SECOND);
+        BerlinClockUtil.convertStringToNumber(null, BerlinClockConstants.SECOND);
     }
     
     @Test
     public void testConvertSecondsWithInvalidSeconds() {
         thrownException.expect(IllegalArgumentException.class);
         thrownException.expectMessage(BerlinClockConstants.INVALID_RANGE_FOR_SECONDS_MINUTES);
-        berlinClockUtil.convertSeconds(SIXTY);
+        BerlinClockUtil.convertSeconds(SIXTY);
     }
     
     @Test
     public void testConvertSecondsWithLessThanZero() {
         thrownException.expect(IllegalArgumentException.class);
         thrownException.expectMessage(String.format(BerlinClockConstants.PLEASE_ENTER_NUMERIC_VALUES, BerlinClockConstants.SECOND));
-        berlinClockUtil.convertSeconds(MINUS_ONE);
+        BerlinClockUtil.convertSeconds(MINUS_ONE);
     }
 
     @Test
     public void testConvertSecondsToGetYellowLamp() {
-        String convertedSecond = berlinClockUtil.convertSeconds(ZERO);
+        String convertedSecond = BerlinClockUtil.convertSeconds(ZERO);
         assertThat(convertedSecond, is(notNullValue()));
         assertThat(convertedSecond, is(BerlinClockLamp.YELLOW.getValue() + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testConvertSecondsToGetOffLamp() {
-        String convertedSecond = berlinClockUtil.convertSeconds(FIFTY_NINE);
+        String convertedSecond = BerlinClockUtil.convertSeconds(FIFTY_NINE);
         assertThat(convertedSecond, is(notNullValue()));
         assertThat(convertedSecond, is(BerlinClockLamp.OFF.getValue() + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testConvertHours() {
-        String convertedHours = berlinClockUtil.convertHours(NINE);
+        String convertedHours = BerlinClockUtil.convertHours(NINE);
         assertThat(convertedHours, is(notNullValue()));
         assertThat(convertedHours, is(ROOO + BerlinClockConstants.SEPARATOR + RRRR + BerlinClockConstants.SEPARATOR));
     }
@@ -108,19 +106,19 @@ public class BerlinClockUtilTest {
     public void testConvertHoursWithInvalidHours() {
         thrownException.expect(IllegalArgumentException.class);
         thrownException.expectMessage(BerlinClockConstants.INVALID_RANGE_FOR_HOUR);
-        berlinClockUtil.convertHours(TWENTY_FIVE);
+        BerlinClockUtil.convertHours(TWENTY_FIVE);
     }
     
     @Test
     public void testConvertHoursWithLessThanZero() {
         thrownException.expect(IllegalArgumentException.class);
         thrownException.expectMessage(String.format(BerlinClockConstants.PLEASE_ENTER_NUMERIC_VALUES, BerlinClockConstants.HOUR));
-        berlinClockUtil.convertHours(MINUS_ONE);
+        BerlinClockUtil.convertHours(MINUS_ONE);
     }
     
     @Test
     public void testGetBerlinClockHourSettingsForFirstRow() {
-        BerlinClockDisplaySettings settings = berlinClockUtil.getBerlinClockHourSettingsForFirstRow();
+        BerlinClockDisplaySettings settings = BerlinClockUtil.getBerlinClockHourSettingsForFirstRow();
         assertThat(settings, is(notNullValue()));
         assertThat(settings.getNoOfLamps(), is(BerlinClockConstants.FOUR));
         assertThat(settings.getUnitPerLamp(), is(BerlinClockConstants.FIVE));
@@ -131,7 +129,7 @@ public class BerlinClockUtilTest {
     
     @Test
     public void testGetBerlinClockHourSettingsForSecondRow() {
-        BerlinClockDisplaySettings settings = berlinClockUtil.getBerlinClockHourSettingsForSecondRow();
+        BerlinClockDisplaySettings settings = BerlinClockUtil.getBerlinClockHourSettingsForSecondRow();
         assertThat(settings, is(notNullValue()));
         assertThat(settings.getNoOfLamps(), is(BerlinClockConstants.FOUR));
         assertThat(settings.getUnitPerLamp(), is(BerlinClockConstants.ONE));
@@ -142,49 +140,49 @@ public class BerlinClockUtilTest {
     
     @Test
     public void testGetHourLampsForFirstRow() {
-        String firstHoursRow = berlinClockUtil.getHourLampsForFirstRow(NUMBER_NINE);
+        String firstHoursRow = BerlinClockUtil.getHourLampsForFirstRow(NUMBER_NINE);
         assertThat(firstHoursRow, is(notNullValue()));
         assertThat(firstHoursRow, is(ROOO + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testGetHourLampsForFirstRowForAllLampsOn() {
-        String firstHoursRow = berlinClockUtil.getHourLampsForFirstRow(NUMBER_TWENTY_ONE);
+        String firstHoursRow = BerlinClockUtil.getHourLampsForFirstRow(NUMBER_TWENTY_ONE);
         assertThat(firstHoursRow, is(notNullValue()));
         assertThat(firstHoursRow, is(RRRR + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testGetHourLampsForFirstRowForAllLampsOff() {
-        String firstHoursRow = berlinClockUtil.getHourLampsForFirstRow(NUMBER_FOUR);
+        String firstHoursRow = BerlinClockUtil.getHourLampsForFirstRow(NUMBER_FOUR);
         assertThat(firstHoursRow, is(notNullValue()));
         assertThat(firstHoursRow, is(OOOO + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testGetHourLampsForSecondRowAllLampsOn() {
-        String secondHoursRow = berlinClockUtil.getHourLampsForSecondRow(NUMBER_NINE);
+        String secondHoursRow = BerlinClockUtil.getHourLampsForSecondRow(NUMBER_NINE);
         assertThat(secondHoursRow, is(notNullValue()));
         assertThat(secondHoursRow, is(RRRR + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testGetHourLampsForSecondRowAllLampsOff() {
-        String secondHoursRow = berlinClockUtil.getHourLampsForSecondRow(NUMBER_TEN);
+        String secondHoursRow = BerlinClockUtil.getHourLampsForSecondRow(NUMBER_TEN);
         assertThat(secondHoursRow, is(notNullValue()));
         assertThat(secondHoursRow, is(OOOO + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testGetHourLampsForSecondRow() {
-        String secondHoursRow = berlinClockUtil.getHourLampsForSecondRow(NUMBER_SIX);
+        String secondHoursRow = BerlinClockUtil.getHourLampsForSecondRow(NUMBER_SIX);
         assertThat(secondHoursRow, is(notNullValue()));
         assertThat(secondHoursRow, is(ROOO + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testGetBerlinClockMinSettingsForFirstRow() {
-        BerlinClockDisplaySettings settings = berlinClockUtil.getBerlinClockMinSettingsForFirstRow();
+        BerlinClockDisplaySettings settings = BerlinClockUtil.getBerlinClockMinSettingsForFirstRow();
         assertThat(settings, is(notNullValue()));
         assertThat(settings.getNoOfLamps(), is(BerlinClockConstants.ELEVEN));
         assertThat(settings.getUnitPerLamp(), is(BerlinClockConstants.FIVE));
@@ -204,7 +202,7 @@ public class BerlinClockUtilTest {
     
     @Test
     public void testGetBerlinClockMinSettingsForSecondRow() {
-        BerlinClockDisplaySettings settings = berlinClockUtil.getBerlinClockMinSettingsForSecondRow();
+        BerlinClockDisplaySettings settings = BerlinClockUtil.getBerlinClockMinSettingsForSecondRow();
         assertThat(settings, is(notNullValue()));
         assertThat(settings.getNoOfLamps(), is(BerlinClockConstants.FOUR));
         assertThat(settings.getUnitPerLamp(), is(BerlinClockConstants.ONE));
@@ -217,61 +215,61 @@ public class BerlinClockUtilTest {
     public void testConvertMinutesWithInvalidMinutes() {
         thrownException.expect(IllegalArgumentException.class);
         thrownException.expectMessage(BerlinClockConstants.INVALID_RANGE_FOR_SECONDS_MINUTES);
-        berlinClockUtil.convertMinutes(SIXTY);
+        BerlinClockUtil.convertMinutes(SIXTY);
     }
     
     @Test
     public void testConvertMinutesWithLessThanZero() {
         thrownException.expect(IllegalArgumentException.class);
         thrownException.expectMessage(String.format(BerlinClockConstants.PLEASE_ENTER_NUMERIC_VALUES, BerlinClockConstants.MINUTE));
-        berlinClockUtil.convertMinutes(MINUS_ONE);
+        BerlinClockUtil.convertMinutes(MINUS_ONE);
     }
     
     @Test
     public void testConvertMinutes() {
-        String convertedMinutes = berlinClockUtil.convertMinutes(SEVENTEEN);
+        String convertedMinutes = BerlinClockUtil.convertMinutes(SEVENTEEN);
         assertThat(convertedMinutes, is(notNullValue()));
         assertThat(convertedMinutes, is(YYROOOOOOOO + BerlinClockConstants.SEPARATOR + YYOO));
     }
     
     @Test
     public void testGetMinuteLampsForFirstRow() {
-        String firstMinuteRow = berlinClockUtil.getMinuteLampsForFirstRow(NUMBER_SEVENTEEN);
+        String firstMinuteRow = BerlinClockUtil.getMinuteLampsForFirstRow(NUMBER_SEVENTEEN);
         assertThat(firstMinuteRow, is(notNullValue()));
         assertThat(firstMinuteRow, is(YYROOOOOOOO + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testGetMinuteLampsForFirstRowAllLampsOn() {
-        String firstMinuteRow = berlinClockUtil.getMinuteLampsForFirstRow(NUMBER_FIFTY_SIX);
+        String firstMinuteRow = BerlinClockUtil.getMinuteLampsForFirstRow(NUMBER_FIFTY_SIX);
         assertThat(firstMinuteRow, is(notNullValue()));
         assertThat(firstMinuteRow, is(YYRYYRYYRYY + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testGetMinuteLampsForFirstRowAllLampsOff() {
-        String firstMinuteRow = berlinClockUtil.getMinuteLampsForFirstRow(NUMBER_FOUR);
+        String firstMinuteRow = BerlinClockUtil.getMinuteLampsForFirstRow(NUMBER_FOUR);
         assertThat(firstMinuteRow, is(notNullValue()));
         assertThat(firstMinuteRow, is(OOOOOOOOOOO + BerlinClockConstants.SEPARATOR));
     }
     
     @Test
     public void testGetMinuteLampsForSecondRow() {
-        String secondMinuteRow = berlinClockUtil.getMinuteLampsForSecondRow(NUMBER_SEVENTEEN);
+        String secondMinuteRow = BerlinClockUtil.getMinuteLampsForSecondRow(NUMBER_SEVENTEEN);
         assertThat(secondMinuteRow, is(notNullValue()));
         assertThat(secondMinuteRow, is(YYOO));
     }
     
     @Test
     public void testGetMinuteLampsForSecondRowAllLampsOn() {
-        String secondMinuteRow = berlinClockUtil.getMinuteLampsForSecondRow(NUMBER_FOUR);
+        String secondMinuteRow = BerlinClockUtil.getMinuteLampsForSecondRow(NUMBER_FOUR);
         assertThat(secondMinuteRow, is(notNullValue()));
         assertThat(secondMinuteRow, is(YYYY));
     }
     
     @Test
     public void testGetMinuteLampsForSecondRowAllLampsOff() {
-        String secondMinuteRow = berlinClockUtil.getMinuteLampsForSecondRow(NUMBER_ZERO);
+        String secondMinuteRow = BerlinClockUtil.getMinuteLampsForSecondRow(NUMBER_ZERO);
         assertThat(secondMinuteRow, is(notNullValue()));
         assertThat(secondMinuteRow, is(OOOO));
     }

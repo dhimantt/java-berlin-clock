@@ -23,9 +23,9 @@ public class BerlinClockConstants {
     public static final String MINUTE = "MINUTE";
     
     public static final String COLON = ":";
-    public static final String INVALID_TIME_INPUT = "Valiation failed - Invalid time format.";
+    public static final String INVALID_TIME_INPUT = "Invalid time format.";
     public static final String PLEASE_ENTER_NUMERIC_VALUES = "Please enter non-negative numeric value for %s";
-    public static final String INVALID_RANGE_FOR_SECONDS_MINUTES = "Seconds must be between 0 to 59.";
-    public static final String INVALID_RANGE_FOR_HOUR = "Hour must be between 0 to 24.";
+    public static final String INVALID_RANGE_FOR_SECONDS_MINUTES = "Second or Minute value must be between 0 and 59.";
+    public static final String INVALID_RANGE_FOR_HOUR = "Hour value must be between 0 and 24.";
     public static final String SEPARATOR = "\r\n";
 }

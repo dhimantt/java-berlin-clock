@@ -12,6 +12,10 @@ import com.ubs.opsit.interviews.beans.BerlinClockDisplaySettings;
  *
  */
 public class BerlinClockUtil {
+    
+    private BerlinClockUtil() {
+        // can't create object as its not required.
+    }
 
     /**
      * Converts input value to Berlin Clock Seconds.
@@ -19,7 +23,7 @@ public class BerlinClockUtil {
      * @return value which represents second lamp in Berlin Clock
      * @throws IllegalArgumentException if the input value is non-numeric or invalid seconds.
      */
-    public String convertSeconds(String value) {
+    public static String convertSeconds(String value) {
         int seconds = validateInput(value, BerlinClockConstants.SECOND, BerlinClockConstants.FIFTY_NINE, BerlinClockConstants.INVALID_RANGE_FOR_SECONDS_MINUTES);
         String secondsLampValue = (seconds % 2 == BerlinClockConstants.ZERO) ? BerlinClockLamp.YELLOW.getValue() : BerlinClockLamp.OFF.getValue();
         return secondsLampValue + BerlinClockConstants.SEPARATOR;
@@ -31,7 +35,7 @@ public class BerlinClockUtil {
      * @return value which represents hour lamps in Berlin Clock
      * @throws IllegalArgumentException if the input value is non-numeric or invalid hours.
      */
-    public String convertHours(String value) {
+    public static String convertHours(String value) {
         int hours = validateInput(value, BerlinClockConstants.HOUR, BerlinClockConstants.TWENTY_FOUR, BerlinClockConstants.INVALID_RANGE_FOR_HOUR);
         StringBuilder hourLamps = new StringBuilder();
         hourLamps.append(getHourLampsForFirstRow(hours));
@@ -45,7 +49,7 @@ public class BerlinClockUtil {
      * @return value which represents minute lamps in Berlin Clock
      * @throws IllegalArgumentException if the input value is non-numeric or invalid minutes.
      */
-    public String convertMinutes(String value) {
+    public static String convertMinutes(String value) {
         int min = validateInput(value, BerlinClockConstants.MINUTE, BerlinClockConstants.FIFTY_NINE, BerlinClockConstants.INVALID_RANGE_FOR_SECONDS_MINUTES);
         StringBuilder minLamps = new StringBuilder();
         minLamps.append(getMinuteLampsForFirstRow(min));
@@ -60,7 +64,7 @@ public class BerlinClockUtil {
      * @return numeric equivalent of string value
      * @throws IllegalArgumentException if the input value negative or non-numeric.
      */
-    public int convertStringToNumber(String value, String unit) {
+    public static int convertStringToNumber(String value, String unit) {
         if (NumberUtils.isDigits(value)) {
             return Integer.parseInt(value);
         } else {
@@ -73,7 +77,7 @@ public class BerlinClockUtil {
      * @param hours hour value to be converted
      * @return String representing hour lamps for first row
      */
-    public String getHourLampsForFirstRow(int hours) {
+    public static String getHourLampsForFirstRow(int hours) {
         BerlinClockDisplaySettings berlinClockHourSettings = getBerlinClockHourSettingsForFirstRow();
         StringBuilder firstHoursRow = getBerlinClockRepresentation(berlinClockHourSettings, hours, berlinClockHourSettings.hasSeparatorLamp(), false);
         firstHoursRow.append(BerlinClockConstants.SEPARATOR);
@@ -85,7 +89,7 @@ public class BerlinClockUtil {
      * @param hours hour value to be converted
      * @return String representing lamps for second row
      */
-    public String getHourLampsForSecondRow(int hours) {
+    public static String getHourLampsForSecondRow(int hours) {
         BerlinClockDisplaySettings settingsForFirstHourRow = getBerlinClockHourSettingsForFirstRow();
         BerlinClockDisplaySettings berlinClockHourSettings = getBerlinClockHourSettingsForSecondRow();
         int hourRemainder = hours % settingsForFirstHourRow.getUnitPerLamp();
@@ -98,7 +102,7 @@ public class BerlinClockUtil {
      * Returns Berlin Clock hour display settings for first row.
      * @return {@link BerlinClockDisplaySettings}
      */
-    public BerlinClockDisplaySettings getBerlinClockHourSettingsForFirstRow() {
+    public static BerlinClockDisplaySettings getBerlinClockHourSettingsForFirstRow() {
         BerlinClockDisplaySettings berlinClockHourSettings = new BerlinClockDisplaySettings();
         berlinClockHourSettings.setUnitPerLamp(BerlinClockConstants.FIVE);
         populateBerlinClockHourSettings(berlinClockHourSettings);
@@ -109,7 +113,7 @@ public class BerlinClockUtil {
      * Returns Berlin Clock hour display settings for second row.
      * @return {@link BerlinClockDisplaySettings}
      */
-    public BerlinClockDisplaySettings getBerlinClockHourSettingsForSecondRow() {
+    public static BerlinClockDisplaySettings getBerlinClockHourSettingsForSecondRow() {
         BerlinClockDisplaySettings berlinClockHourSettings = new BerlinClockDisplaySettings();
         berlinClockHourSettings.setUnitPerLamp(BerlinClockConstants.ONE);
         populateBerlinClockHourSettings(berlinClockHourSettings);
@@ -120,7 +124,7 @@ public class BerlinClockUtil {
      * Returns Berlin Clock minute display settings for first row.
      * @return {@link BerlinClockDisplaySettings}
      */
-    public BerlinClockDisplaySettings getBerlinClockMinSettingsForFirstRow() {
+    public static BerlinClockDisplaySettings getBerlinClockMinSettingsForFirstRow() {
         BerlinClockDisplaySettings berlinClockMinSettings = new BerlinClockDisplaySettings();
         berlinClockMinSettings.setNoOfLamps(BerlinClockConstants.ELEVEN);
         berlinClockMinSettings.setUnitPerLamp(BerlinClockConstants.FIVE);
@@ -139,7 +143,7 @@ public class BerlinClockUtil {
      * Returns Berlin Clock minute display settings for second row.
      * @return {@link BerlinClockDisplaySettings}
      */
-    public BerlinClockDisplaySettings getBerlinClockMinSettingsForSecondRow() {
+    public static BerlinClockDisplaySettings getBerlinClockMinSettingsForSecondRow() {
         BerlinClockDisplaySettings berlinClockMinSettings = new BerlinClockDisplaySettings();
         berlinClockMinSettings.setNoOfLamps(BerlinClockConstants.FOUR);
         berlinClockMinSettings.setUnitPerLamp(BerlinClockConstants.ONE);
@@ -154,7 +158,7 @@ public class BerlinClockUtil {
      * @param minutes minute value to be converted
      * @return String representing minute lamps for first row
      */
-    public String getMinuteLampsForFirstRow(int minutes) {
+    public static String getMinuteLampsForFirstRow(int minutes) {
         BerlinClockDisplaySettings minSettingsForFirstRow = getBerlinClockMinSettingsForFirstRow();
         StringBuilder firstMinutesRow = getBerlinClockRepresentation(minSettingsForFirstRow, minutes, minSettingsForFirstRow.hasSeparatorLamp(), false);
         firstMinutesRow.append(BerlinClockConstants.SEPARATOR);
@@ -166,7 +170,7 @@ public class BerlinClockUtil {
      * @param minutes minute value to be converted
      * @return String representing mintute lamps for second row
      */
-    public String getMinuteLampsForSecondRow(int minutes) {
+    public static String getMinuteLampsForSecondRow(int minutes) {
         BerlinClockDisplaySettings settingsForFirstMinRow = getBerlinClockMinSettingsForFirstRow();
         BerlinClockDisplaySettings berlinClockMinuteSettings = getBerlinClockMinSettingsForSecondRow();
         int minRemainder = minutes % settingsForFirstMinRow.getUnitPerLamp();
@@ -174,7 +178,7 @@ public class BerlinClockUtil {
         return secondMinutesRow.toString();
     }
     
-    private int validateInput(String value, String unit, int maxAllowedValue, String msg) {
+    private static int validateInput(String value, String unit, int maxAllowedValue, String msg) {
         int number = convertStringToNumber(value, unit);
         if (number > maxAllowedValue) { // Negative values will be handled by convertStringToNumber method.
             throw new IllegalArgumentException(msg);
@@ -182,7 +186,7 @@ public class BerlinClockUtil {
         return number;
     }
     
-    private List<Integer> addSeparatorPositions() {
+    private static List<Integer> addSeparatorPositions() {
         List<Integer> separatorPositions = new ArrayList<> ();
         separatorPositions.add(BerlinClockConstants.TWO);
         separatorPositions.add(BerlinClockConstants.FIVE);
@@ -190,7 +194,7 @@ public class BerlinClockUtil {
         return separatorPositions;
     }
     
-    private StringBuilder getBerlinClockRepresentation(BerlinClockDisplaySettings minuteSettings, int value, boolean hasSeparator, boolean secondRow) {
+    private static StringBuilder getBerlinClockRepresentation(BerlinClockDisplaySettings minuteSettings, int value, boolean hasSeparator, boolean secondRow) {
         StringBuilder row = new StringBuilder();
         int count = BerlinClockConstants.ZERO;
         int remainder = value % minuteSettings.getUnitPerLamp();
@@ -212,7 +216,7 @@ public class BerlinClockUtil {
         return row;
     }
 
-    private void populateBerlinClockHourSettings(BerlinClockDisplaySettings berlinClockHour) {
+    private static void populateBerlinClockHourSettings(BerlinClockDisplaySettings berlinClockHour) {
         berlinClockHour.setNoOfLamps(BerlinClockConstants.FOUR);
         berlinClockHour.setOnLamp(BerlinClockLamp.RED);
         berlinClockHour.setOffLamp(BerlinClockLamp.OFF);
