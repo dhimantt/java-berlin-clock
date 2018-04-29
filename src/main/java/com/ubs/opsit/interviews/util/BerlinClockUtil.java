@@ -21,7 +21,7 @@ public class BerlinClockUtil {
      */
     public String convertSeconds(String value) {
         int seconds = validateInput(value, BerlinClockConstants.SECOND, BerlinClockConstants.FIFTY_NINE, BerlinClockConstants.INVALID_RANGE_FOR_SECONDS_MINUTES);
-        String secondsLampValue = (seconds % 2 == 0) ? BerlinClockLamp.YELLOW.getValue() : BerlinClockLamp.OFF.getValue();
+        String secondsLampValue = (seconds % 2 == BerlinClockConstants.ZERO) ? BerlinClockLamp.YELLOW.getValue() : BerlinClockLamp.OFF.getValue();
         return secondsLampValue + BerlinClockConstants.SEPARATOR;
     }
 
@@ -192,11 +192,11 @@ public class BerlinClockUtil {
     
     private StringBuilder getBerlinClockRepresentation(BerlinClockDisplaySettings minuteSettings, int value, boolean hasSeparator, boolean secondRow) {
         StringBuilder row = new StringBuilder();
-        int count = 0;
+        int count = BerlinClockConstants.ZERO;
         int remainder = value % minuteSettings.getUnitPerLamp();
         int lampsToOn = secondRow ? value : (value - remainder) / minuteSettings.getUnitPerLamp();
         
-        for (int index = 0; index < minuteSettings.getNoOfLamps(); index++) {
+        for (int index = BerlinClockConstants.ZERO; index < minuteSettings.getNoOfLamps(); index++) {
             if (count < lampsToOn) {
                 if (minuteSettings.hasSeparatorLamp() && minuteSettings.getSeperatorLampPositions().contains(count)) {
                     row.append(minuteSettings.getSeparatorLamp().getValue());
