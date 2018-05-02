@@ -194,21 +194,21 @@ public class BerlinClockUtil {
         return separatorPositions;
     }
     
-    private static StringBuilder getBerlinClockRepresentation(BerlinClockDisplaySettings minuteSettings, int value, boolean hasSeparator, boolean secondRow) {
+    private static StringBuilder getBerlinClockRepresentation(BerlinClockDisplaySettings berlinClockDisplaySettings, int value, boolean hasSeparator, boolean secondRow) {
         StringBuilder row = new StringBuilder();
         int count = BerlinClockConstants.ZERO;
-        int remainder = value % minuteSettings.getUnitPerLamp();
-        int lampsToOn = secondRow ? value : (value - remainder) / minuteSettings.getUnitPerLamp();
+        int remainder = value % berlinClockDisplaySettings.getUnitPerLamp();
+        int lampsToOn = secondRow ? value : (value - remainder) / berlinClockDisplaySettings.getUnitPerLamp();
         
-        for (int index = BerlinClockConstants.ZERO; index < minuteSettings.getNoOfLamps(); index++) {
+        for (int index = BerlinClockConstants.ZERO; index < berlinClockDisplaySettings.getNoOfLamps(); index++) {
             if (count < lampsToOn) {
-                if (minuteSettings.hasSeparatorLamp() && minuteSettings.getSeperatorLampPositions().contains(count)) {
-                    row.append(minuteSettings.getSeparatorLamp().getValue());
+                if (berlinClockDisplaySettings.hasSeparatorLamp() && berlinClockDisplaySettings.getSeperatorLampPositions().contains(count)) {
+                    row.append(berlinClockDisplaySettings.getSeparatorLamp().getValue());
                 } else {
-                    row.append(minuteSettings.getOnLamp().getValue());
+                    row.append(berlinClockDisplaySettings.getOnLamp().getValue());
                 }
             } else {
-                row.append(minuteSettings.getOffLamp().getValue());
+                row.append(berlinClockDisplaySettings.getOffLamp().getValue());
             }
             count = count + 1;
         }
